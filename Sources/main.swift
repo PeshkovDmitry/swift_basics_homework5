@@ -52,18 +52,24 @@ struct Pizza: Product {
 
 }
 
-struct FrenchFries {
-    var price: Double
-    var size: FrenchFriesSize 
+struct FrenchFries: Product {
 
-    enum FrenchFriesSize: String {
+    var price: Double
+    var size: Size 
+
+    enum Size: String {
         case small = "Small"
         case medium = "Medium"
         case big = "Big"
     }
 
-}
+    func info() {
+        print("---- French Fries -----")
+        print("Size: \(size.rawValue)")
+        print("Price: \(price)")
+    }
 
+}
 
 class Pizzeria {
 
@@ -79,6 +85,23 @@ class Pizzeria {
 
     func getAll() -> [Product] {
         products
+    }
+
+}
+
+protocol PizzeriaBehavior {
+    func open()
+    func close()
+}
+
+extension Pizzeria: PizzeriaBehavior {
+    
+    func open() {
+        print("We are open!")
+    }
+
+    func close() {
+        print("Sorry, we are closed")
     }
 
 }
@@ -107,8 +130,15 @@ pizzeria.add(product: Pizza(
         Ingredients.oliveoil, 
         Ingredients.basilleaves]))
 
+pizzeria.add(product: FrenchFries(
+    price: 100,
+    size: FrenchFries.Size.medium
+))
 
+pizzeria.open()
 
 for product in pizzeria.getAll() {
     product.info()
 }
+
+pizzeria.close()
