@@ -1,6 +1,10 @@
 // Данные о составе пицц взяты отсюда 
 // https://www.pizzarecipe.org/different-types-of-pizza/#Italian%20pizza%20types
 
+protocol Product {
+    func info()
+}
+
 enum DoughType: String {
     case thick = "Thick"
     case thin = "Thin"
@@ -19,7 +23,8 @@ enum Ingredients: String {
     case buffalomozzarella = "Buffalo mozzarella "
 }
 
-struct Pizza {
+struct Pizza: Product {
+
     var name: String
     var price: Float
     var pizzaType: PizzaType
@@ -31,6 +36,18 @@ struct Pizza {
         case american = "American"
         case mexican = "Mexican"
         case german = "German"
+    }
+
+    func info() {
+        print("------ Pizza ----------")
+        print("Title: \(name)")
+        print("Price: \(price)")
+        print("Type: \(pizzaType.rawValue)")
+        print("DoughType: \(doughType.rawValue)")
+        print("Ingredients")
+        for ingr in ingredients {
+            print("-> \(ingr.rawValue)")
+        }
     }
 
 }
@@ -48,29 +65,27 @@ struct FrenchFries {
 }
 
 
-
-
-
 class Pizzeria {
-    private var pizzas: [Pizza]
+
+    private var products: [Product]
     
-    init(pizzas: [Pizza]) {
-        self.pizzas = pizzas
+    init(products: [Product]) {
+        self.products = products
     }
 
-    func addPizza(pizza: Pizza) {
-        pizzas.append(pizza)
+    func add(product: Product) {
+        products.append(product)
     }
 
-    func getAll() -> [Pizza] {
-        self.pizzas
+    func getAll() -> [Product] {
+        products
     }
 
 }
 
-var pizzeria = Pizzeria(pizzas: [])
+var pizzeria = Pizzeria(products: [])
 
-pizzeria.addPizza(pizza: Pizza(
+pizzeria.add(product: Pizza(
     name: "Napoletana",
     price: 650.00,
     pizzaType: Pizza.PizzaType.italian,
@@ -81,7 +96,7 @@ pizzeria.addPizza(pizza: Pizza(
         Ingredients.anchovies, 
         Ingredients.oliveoil]))
 
-pizzeria.addPizza(pizza: Pizza(
+pizzeria.add(product: Pizza(
     name: "Margherita",
     price: 600.00,
     pizzaType: Pizza.PizzaType.italian,
@@ -92,14 +107,8 @@ pizzeria.addPizza(pizza: Pizza(
         Ingredients.oliveoil, 
         Ingredients.basilleaves]))
 
-for pizza in pizzeria.getAll() {
-    print("----------------------")
-    print("Title: \(pizza.name)")
-    print("Price: \(pizza.price)")
-    print("Type: \(pizza.pizzaType.rawValue)")
-    print("DoughType: \(pizza.doughType.rawValue)")
-    print("Ingredients")
-    for ingr in pizza.ingredients {
-        print("-> \(ingr.rawValue)")
-    }
+
+
+for product in pizzeria.getAll() {
+    product.info()
 }
