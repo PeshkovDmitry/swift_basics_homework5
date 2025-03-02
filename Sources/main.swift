@@ -142,3 +142,10 @@ for product in pizzeria.getAll() {
 }
 
 pizzeria.close()
+
+func sub<T: Numeric>(a: T, b: T) -> T {
+    a - b
+}
+
+print(sub(a: 2, b: 1))
+print(sub(a: 3.0, b: 2.0))
