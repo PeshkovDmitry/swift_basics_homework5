@@ -35,6 +35,22 @@ struct Pizza {
 
 }
 
+struct FrenchFries {
+    var price: Double
+    var size: FrenchFriesSize 
+
+    enum FrenchFriesSize: String {
+        case small = "Small"
+        case medium = "Medium"
+        case big = "Big"
+    }
+
+}
+
+
+
+
+
 class Pizzeria {
     private var pizzas: [Pizza]
     
